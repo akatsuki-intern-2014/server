@@ -54,14 +54,6 @@ class ArticlesController extends AppController {
 	public function like($article_id) {
 		if ($article_id =! null) {
 			if ($this->Like->findByArticleId('first')) {
-				$data = array(
-					'Like' => array(
-						'value' => 1
-						'article_id' => $article_id,
-					)
-				);
- 				$this->Like->save($data);
-			} else {
 				$this->Like->updateAll(
 					array(
 						'Like.value' => '`Like`.`value` + 1',
@@ -71,6 +63,14 @@ class ArticlesController extends AppController {
 						'Like.article_id' => $article_id
 					)
 				);
+			} else {
+				$data = array(
+					'Like' => array(
+						'value' => 1
+						'article_id' => $article_id,
+					)
+				);
+ 				$this->Like->save($data);
 			}
 			$result = $this->success(01,'Success');
 		} else {
