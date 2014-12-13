@@ -8,8 +8,8 @@ class ArticlesController extends AppController {
 			$article_lists = $this->Article->find(
 				'list',
 				array(
-					'order' => array(
-						'category_id' => $category_id
+					'conditions' => array(
+						'Article.category_id' => $category_id
 					)
 				)
 			);
