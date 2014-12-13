@@ -1,7 +1,7 @@
 <?php
 class ArticlesController extends AppController {
 
-	var $uses = array('Article','Category');
+	var $uses = array('Article','Category','Like');
 
 	public function lists($category_id = null) {
 		$this->response->type('application/json');
@@ -49,5 +49,33 @@ class ArticlesController extends AppController {
 		$category_list['Category'] = $this->Category->find('list');
 		$category_list += $this->success('02','Success');
 		$this->set('result',$category_list);
+	}
+
+	public function like($article_id) {
+		if ($article_id =! null) {
+			if ($this->Like->findByArticleId('first')) {
+				$data = array(
+					'Like' => array(
+						'value' => 1
+						'article_id' => $article_id,
+					)
+				);
+ 				$this->Like->save($data);
+			} else {
+				$this->Like->updateAll(
+					array(
+						'Like.value' => '`Like`.`value` + 1',
+						'Like.modified' => "'".date('Y-m-d H:i:s')."'"
+					),
+					array(
+						'Like.article_id' => $article_id
+					)
+				);
+			}
+			$result = $this->success(01,'Success');
+		} else {
+			$result = $this->error(-01,'Errro');
+		}
+		$this->set('result',$result);
 	}
 }
