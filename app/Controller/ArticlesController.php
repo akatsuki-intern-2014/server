@@ -46,7 +46,7 @@ class ArticlesController extends AppController {
 
 	public function category() {
 		$this->response->type('application/json');
-		$category_list = $this->Category->find('list');
+		$category_list['Category'] = $this->Category->find('list');
 		$category_list += $this->success('02','Success');
 		$this->set('result',$category_list);
 	}
