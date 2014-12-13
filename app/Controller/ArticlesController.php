@@ -1,5 +1,8 @@
 <?php
 class ArticlesController extends AppController {
+
+	var $uses = array('Article','Category');
+
 	public function lists($category_id = null) {
 		$this->response->type('application/json');
 
@@ -24,13 +27,25 @@ class ArticlesController extends AppController {
 	}
 
 	public function detail($article_id = null) {
-		$article_detail = $this->Article->find(
-			'first',
-			array(
-				'conditions' => array(
-					'article_id' => $article_id
-				)	
-			)
-		);
+		if ($article_id =! null) {
+			$article_detail = $this->Article->find(
+				'first',
+				array(
+					'conditions' => array(
+						'article_id' => $article_id
+					)	
+				)
+			);
+			$article_detail += $this->success('01','Success');
+		} else {
+			$article_detail = $this->eror('-01','Error');
+		}
+		$this->set('result',$article_detail);
+	}
+
+	public function category() {
+		$this->resuponse->type('application/json');
+		$category_list = $this->Category->find('list');
+		$category_list += $this->success('02','Success');
 	}
 }
