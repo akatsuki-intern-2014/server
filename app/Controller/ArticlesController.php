@@ -9,13 +9,23 @@ class ArticlesController extends AppController {
 		if ($caterogy_id =! null) {
 			
 			$article_lists = $this->Article->find(
-				'list',
+				'all',
 				array(
 					'conditions' => array(
 						'Article.category_id' => $category_id
+					),
+					'fields' => array(
+						'Article.id',
+						'Article.title',
+						'Article.created',
+						'Like.value'
 					)
 				)
 			);
+
+			foreach($article_lists as $article_list) {
+				$article_list['Article']['image_url'] = WWW_ROOT;
+			}
 
 			$article_lists += $this->success('01','Success');
 		} else {
