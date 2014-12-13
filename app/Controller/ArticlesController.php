@@ -3,7 +3,7 @@ class ArticlesController extends AppController {
 	public function lists($category_id = null) {
 		$this->response->type('application/json');
 
-		if ($caterogy_id != null) {
+		if ($caterogy_id =! null) {
 			
 			$article_lists = $this->Article->find(
 				'list',
