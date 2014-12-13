@@ -1,6 +1,6 @@
 <?php
 class ArticlesController extends AppController {
-	public function list() {
+	public function lists() {
 		$this->response->type('application/json');
 
 		$article_lists = $this->Article->find(
