@@ -27,6 +27,7 @@ class ArticlesController extends AppController {
 	}
 
 	public function detail($article_id = null) {
+		$this->response->type('application/json');
 		if ($article_id =! null) {
 			$article_detail = $this->Article->find(
 				'first',
@@ -44,8 +45,9 @@ class ArticlesController extends AppController {
 	}
 
 	public function category() {
-		$this->resuponse->type('application/json');
+		$this->response->type('application/json');
 		$category_list = $this->Category->find('list');
 		$category_list += $this->success('02','Success');
+		$this->set('result',$category_list);
 	}
 }
