@@ -53,20 +53,21 @@ class ArticlesController extends AppController {
 
 	public function like($article_id) {
 		if ($article_id =! null) {
-			if ($this->Like->findByArticleId('first')) {
+			if ($like = $this->Like->findByArticleId('first')) {
 				$this->Like->updateAll(
 					array(
 						'Like.value' => '`Like`.`value` + 1',
 						'Like.modified' => "'".date('Y-m-d H:i:s')."'"
 					),
 					array(
+						'Like.id' => $like['Like']['id'],
 						'Like.article_id' => $article_id
 					)
 				);
 			} else {
 				$data = array(
 					'Like' => array(
-						'value' => 1
+						'value' => 1,
 						'article_id' => $article_id,
 					)
 				);
