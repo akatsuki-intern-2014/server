@@ -33,7 +33,7 @@ class ArticlesController extends AppController {
 				'first',
 				array(
 					'conditions' => array(
-						'article_id' => $article_id
+						'Article.id' => $article_id
 					)	
 				)
 			);
