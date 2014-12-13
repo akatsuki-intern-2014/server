@@ -23,8 +23,9 @@ class ArticlesController extends AppController {
 				)
 			);
 
-			foreach($article_lists as $article_list) {
-				$article_list['Article']['image_url'] = WWW_ROOT;
+			foreach($article_lists as $key => $article_list) {
+				$article_lists[$key]['Article']['image_url'] 
+				= Router::fullbaseUrl().DS."/img/Articles/".$article_list['Article']['id'].".jpg";
 			}
 
 			$article_lists += $this->success('01','Success');
