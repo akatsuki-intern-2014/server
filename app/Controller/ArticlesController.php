@@ -17,7 +17,7 @@ class ArticlesController extends AppController {
 			$article_lists += $this->success('01','Success');
 		} else {
 			
-			$article_lists = $this->error('01','Success');
+			$article_lists = $this->error('01','Error');
 		}
 
 		$this->set('result',$article_lists);
