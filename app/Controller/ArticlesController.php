@@ -1,18 +1,24 @@
 <?php
 class ArticlesController extends AppController {
-	public function lists() {
+	public function lists($category_id = null) {
 		$this->response->type('application/json');
 
-		$article_lists = $this->Article->find(
-			'list',
-			array(
-				'order' => array(
-					'news_order' => 'desc'
+		if ($caterogy_id != null) {
+			
+			$article_lists = $this->Article->find(
+				'list',
+				array(
+					'order' => array(
+						'category_id' => $category_id
+					)
 				)
-			)
-		);
+			);
 
-		$article_lists += $this->success('01','Success');
+			$article_lists += $this->success('01','Success');
+		} else {
+			
+			$article_lists = $this->error('01','Success');
+		}
 
 		$this->set('result',$article_lists);
 	}
