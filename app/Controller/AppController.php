@@ -35,4 +35,51 @@ class AppController extends Controller {
 		'DebugKit.Toolbar',
 		'Session',
 	);
+	
+	/**
+	 * success method
+	 *
+	 * @access private
+	 * @return array status code and message.
+	 */
+	protected function success($code = '--', $message = '--') {
+
+		// Generate response code and message
+		$status = array(
+			'Status' => array(
+				'code' => $code,
+				'message' => $message,
+				'condition' => "OK"
+			)
+		);
+		return $status;
+	}
+	
+	/**
+	 * error method 
+	 *
+	 * @access protected
+	 * @return array status code and message.
+	 */
+	protected function error($code = '--', $message = '--') {
+		
+		// Generate response code and message
+		$status = array(
+			'Status' => array(
+				'code' => $code,
+				'message' => $message,
+				'condition' => "NG",
+				'meta' => array(
+					'url' => $this->request->here,
+					'method' => $this->request->method(),
+				)
+			)
+		);
+		// If request is post
+		if ($this->request->is('post')) {
+			$status['Status']['meta']['postData'] = $this->request->input();
+		} 
+		return $status;
+	}
+
 }
