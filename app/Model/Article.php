@@ -1,8 +1,7 @@
 <?php
 class Article extends AppModel {
 	public $hasMany = array(
-		'Comment',
-		array(
+		'Comment' => array(
 			'fields' => array(
 				'id',
 				'body',
@@ -12,8 +11,7 @@ class Article extends AppModel {
 	);
 
 	public $belongsTo = array(
-		'Category',
-		array(
+		'Category' => array(
 			'fields' => array(
 				'id',
 				'name'
@@ -22,8 +20,7 @@ class Article extends AppModel {
 	);
 
 	public $hasOne = array(
-		'Like',
-		array(
+		'Like' => array(
 			'fields' => array(
 				'id',
 				'value',
