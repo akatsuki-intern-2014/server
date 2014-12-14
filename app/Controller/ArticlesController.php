@@ -26,6 +26,10 @@ class ArticlesController extends AppController {
 			foreach($article_lists as $key => $article_list) {
 				$article_lists[$key]['Article']['image_url'] 
 				= Router::fullbaseUrl().DS."/img/Articles/".$article_list['Article']['id'].".jpg";
+				
+				if ($article_list['Like']['value'] == null) {
+					$article_lists[$key]['Like']['value'] = 0;
+				}
 			}
 
 			$article_lists += $this->success('01','Success');
