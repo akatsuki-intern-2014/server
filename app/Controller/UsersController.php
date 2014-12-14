@@ -15,7 +15,7 @@ class UsersController extends AppController {
 #					'user_id' => $like_username
 #				),
 				'order' => array(
-					'created' => 'desc'
+					'UserLike.created' => 'desc'
 				)
 			)
 		);
