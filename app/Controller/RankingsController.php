@@ -1,9 +1,26 @@
 <?php
 class RankingsController extends AppController {
 
+	/**
+	 * uses property
+	 *
+	 * @var array $uses UseDatabaseName
+	 */
 	var $uses = array('Article');
 
+	/**
+	 * all method
+	 *
+	 *  All ranking API
+	 *
+	 * @return void
+	 */
 	public function all() {
+
+		// Set response type
+		$this->response->type('application/json');
+
+		// get article ranking 
 		$lists = $this->Article->find(
 			'all',
 			array(
@@ -20,6 +37,7 @@ class RankingsController extends AppController {
 			)
 		);
 
+		// Convert value 
 		foreach($lists as $key => $list) {
 			$lists[$key]['Comment']['value'] = count($list['Comment']);
 			if ($list['Like']['value'] == null) {
@@ -32,8 +50,22 @@ class RankingsController extends AppController {
 		
 	}
 
+	/**
+	 * category method
+	 *
+	 * Category Ranking API
+	 *
+	 * @param integer $category_id CategoryID
+	 * @return void
+	 */
 	public function category($category_id = null) {
+
+		// Set response type
+		$this->response->type('application/json');
+
 		if ($category_id =! null) {
+
+			// Get Article Ranking
 			$lists = $this->Article->find(
 				'all',
 				array(
@@ -53,7 +85,8 @@ class RankingsController extends AppController {
 					)
 				)
 			);
-			
+
+			// Cnvert Like value
 			foreach($lists as $key => $list) {
 				$lists[$key]['Commnet']['value'] = count($list['Comment']);
 				if ($list['Like']['value'] == null) {
