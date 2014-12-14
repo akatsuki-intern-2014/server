@@ -22,6 +22,9 @@ class RankingsController extends AppController {
 
 		foreach($lists as $key => $list) {
 			$lists[$key]['Comment']['value'] = count($list['Comment']);
+			if ($list['Like']['value'] == null) {
+				$lists[$key]['Like']['value'] = 0;
+			}
 		}
 
 		$lists += $this->success('03','Success');
@@ -53,6 +56,9 @@ class RankingsController extends AppController {
 			
 			foreach($lists as $key => $list) {
 				$lists[$key]['Commnet']['value'] = count($list['Comment']);
+				if ($list['Like']['value'] == null) {
+					$lists[$key]['Like']['value'] = 0;
+				}
 			}		
 
 			$lists += $this->success('04','Success');
