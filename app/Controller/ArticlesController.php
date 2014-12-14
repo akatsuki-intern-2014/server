@@ -1,7 +1,7 @@
 <?php
 class ArticlesController extends AppController {
 
-	var $uses = array('Article','Category','Like','Comment');
+	var $uses = array('Article','Category','Like','Comment','UserLike');
 
 	public function lists($category_id = null) {
 		$this->response->type('application/json');
@@ -25,7 +25,7 @@ class ArticlesController extends AppController {
 
 			foreach($article_lists as $key => $article_list) {
 				$article_lists[$key]['Article']['image_url'] 
-				= Router::fullbaseUrl().DS."/img/Articles/".$article_list['Article']['id'].".jpg";
+				= Router::fullbaseUrl().DS."server/img/Articles/".$article_list['Article']['id'].".jpg";
 				
 				if ($article_list['Like']['value'] == null) {
 					$article_lists[$key]['Like']['value'] = 0;
@@ -81,6 +81,11 @@ class ArticlesController extends AppController {
 				);
  				$this->Like->save($data);
 			}
+			$user_like = array(
+				'user_id' => 1,
+				'article_id' => $article_id
+			);
+			$this->UserLike->save($user_like);
 			$result = $this->success(01,'Success');
 		} else {
 			$result = $this->error(-01,'Errro');
