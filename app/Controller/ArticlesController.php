@@ -43,15 +43,8 @@ class ArticlesController extends AppController {
 
 	public function detail($article_id = null) {
 		$this->response->type('application/json');
-		if ($article_id =! null) {
-			$article_detail = $this->Article->find(
-				'first',
-				array(
-					'conditions' => array(
-						'Article.id' => $article_id
-					)	
-				)
-			);
+		if ($id =! null) {
+			$article_detail = $this->Article->findById($article_id);
 			if ($article_detail['Like']['value'] == null) { 
 				$article_detail['Like']['value'] = 0;
 			}
@@ -69,7 +62,7 @@ class ArticlesController extends AppController {
 		$this->set('result',$category_list);
 	}
 
-	public function like($article_id) {
+	public function like($article_id = null) {
 		$this->response->type('application/json');
 		if ($article_id =! null) {
 			$like = $this->Like->findByArticleId($article_id);
