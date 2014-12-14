@@ -1,7 +1,7 @@
 <?php
 class ArticlesController extends AppController {
 
-	var $uses = array('Article','Category','Like');
+	var $uses = array('Article','Category','Like','Comment');
 
 	public function lists($category_id = null) {
 		$this->response->type('application/json');
@@ -63,6 +63,7 @@ class ArticlesController extends AppController {
 	}
 
 	public function like($article_id) {
+		$this->response->type('application/json');
 		if ($article_id =! null) {
 			if ($like = $this->Like->findByArticleId($article_id)) {
 				$this->Like->updateAll(
@@ -87,6 +88,27 @@ class ArticlesController extends AppController {
 			$result = $this->success(01,'Success');
 		} else {
 			$result = $this->error(-01,'Errro');
+		}
+		$this->set('result',$result);
+	}
+
+	public function cooment() {
+		$this->response->type('application/json');
+		if ( $this->request->is('post')  ) {
+			$post_data = json_decode($this->request->input(),true);
+			$save_data = array(
+				'Comment' => array(
+					'article_id' => $post_data['article_id'],
+					'body' => $post_data['body']
+				)
+			);
+			if ($this->Comment->save($save_data)) {
+				$result = $this->success('00','Success');
+			} else {
+				$result = $this->error('-00','Error');
+			}
+		} else {
+			$result = $this->error('-01','Error');
 		}
 		$this->set('result',$result);
 	}
