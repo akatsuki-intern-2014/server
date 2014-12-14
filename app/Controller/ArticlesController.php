@@ -62,30 +62,11 @@ class ArticlesController extends AppController {
 		$this->set('result',$category_list);
 	}
 
-	public function like($article_id = null) {
+	public function like($like_article_id = null) {
 		$this->response->type('application/json');
-		if ($article_id =! null) {
-			$like = $this->Like->findByArticleId($article_id);
-			if ($like['Like']['id']) {
-				$save_data = array( 
-					'id' => $like['Like']['id'],
-					'value' => $like['Like']['value'] + 1
-				);
-				$this->Like->save($save_data);
-			} else {
-				$data = array(
-					'Like' => array(
-						'value' => 1,
-						'article_id' => $article_id,
-					)
-				);
- 				$this->Like->save($data);
-			}
-			$user_like = array(
-				'user_id' => 1,
-				'article_id' => $article_id
-			);
-			$this->UserLike->save($user_like);
+		if ($like_article_id =! null) {
+			$like = $this->Like->findByArticleId($like_article_id);
+			$this->UserLike->save($like);
 			$result = $this->success(01,'Success');
 		} else {
 			$result = $this->error(-01,'Errro');
