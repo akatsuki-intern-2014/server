@@ -9,9 +9,20 @@ class RankingsController extends AppController {
 			array(
 				'order' => array(
 					'Like.value' => 'desc'
+				),
+				'fields' => array(
+					'Article.id',
+					'Article.title',
+					'Article.category_id',
+					'Category.name',
+					'Like.value'
 				)
 			)
 		);
+
+		foreach($lists as $key => $list) {
+			$lists[$key]['Comment']['value'] = count($list['Comment']);
+		}
 
 		$lists += $this->success('03','Success');
 		$this->set('result',$lists);
@@ -28,9 +39,22 @@ class RankingsController extends AppController {
 					),
 					'conditions' => array(
 						'Article.category_id' => $category_id
+					),
+
+					'fields' => array(
+						'Article.id',
+						'Article.title',
+						'Article.category_id',
+						'Category.name',
+						'Like.value'
 					)
 				)
 			);
+			
+			foreach($lists as $key => $list) {
+				$lists[$key]['Commnet']['value'] = count($list['Comment']);
+			}		
+
 			$lists += $this->success('04','Success');
 		} else {
 			$lists = $this->error('-04','Undefined Category_id');
