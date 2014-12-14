@@ -52,6 +52,9 @@ class ArticlesController extends AppController {
 					)	
 				)
 			);
+			if ($article_detail['Like']['value'] == null) { 
+				$article_detail['Like']['value'] = 0;
+			}
 			$article_detail += $this->success('01','Success');
 		} else {
 			$article_detail = $this->eror('-01','Error');
